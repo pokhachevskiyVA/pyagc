@@ -17,7 +17,7 @@ def stft(x, frame_size, hop_size=None, window=None, N=None, only_positive_freqs=
     # set defaults and sanity check
     assert type(frame_size) == int
     if hop_size is None:
-        hop_size = frame_size / 4  # the default windows (stft & isftf) are designed to work with 25% overlap
+        hop_size = frame_size // 4  # the default windows (stft & isftf) are designed to work with 25% overlap
     assert type(hop_size) == int
     if window is None:
         # window = 0.5 * (1. - np.cos(2. * np.pi * np.arange(frame_size) / frame_size))
@@ -32,7 +32,7 @@ def stft(x, frame_size, hop_size=None, window=None, N=None, only_positive_freqs=
 
     # if requested, remove the "negative frequencies"
     if only_positive_freqs:
-        X = X[:N / 2 + 1, :]
+        X = X[:N // 2 + 1, :]
 
     return X
 
@@ -51,7 +51,7 @@ def istft(X, frame_size, hop_size=None, window=None, only_positive_freqs=True):
     # set defaults and sanity check
     assert type(frame_size) == int
     if hop_size is None:
-        hop_size = frame_size / 4  # the default windows (stft & isftf) are designed to work with 25% overlap
+        hop_size = frame_size // 4  # the default windows (stft & isftf) are designed to work with 25% overlap
     assert type(hop_size) == int
     if window is None:
         # window = 0.5 * (1. - np.cos(2. * np.pi * np.arange(frame_size) / frame_size))
@@ -78,11 +78,11 @@ if __name__ == '__main__':
 
     import scipy.io.wavfile
 
-    sr, d = scipy.io.wavfile.read('../speech.wav')
+    sr, d = scipy.io.wavfile.read('./speech.wav')
 
     # convert from int16 to float (-1,1) range
     convert_16_bit = float(2 ** 15)
-    d = d / (convert_16_bit + 1.0)
+    d = d // (convert_16_bit + 1.0)
 
     # Make STFT on ~32 ms grid
     M = int(2 ** np.round(np.log(0.032 * sr) / np.log(2.)))
@@ -106,9 +106,9 @@ if __name__ == '__main__':
         plt.hold(True)
         plt.plot(x)
         plt.show()
-    except Exception, e:
-        print e
-        print "Failed to plot results"
+    except Exception as e:
+        print(e)
+        print("Failed to plot results")
 
     # convert back to int16 to save as WAV
     x = np.int16(x * convert_16_bit)
