@@ -5,8 +5,8 @@ as described in http://labrosa.ee.columbia.edu/matlab/tf_agc/
 import numpy as np
 import scipy.signal as signal
 
-from utils import fft2melmx
-from stft import stft, istft
+from agc.utils import fft2melmx
+from agc.stft import stft, istft
 
 
 def tf_agc(d, sr, t_scale=0.5, f_scale=1.0, causal_tracking=True, plot=False):
