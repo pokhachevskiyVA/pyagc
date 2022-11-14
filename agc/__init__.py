@@ -1,1 +1,1 @@
-from agc import tf_agc
+from agc.agc import tf_agc
